@@ -1,0 +1,52 @@
+<Market>
+    <Vehicle id="0">
+        <title>Vehicle1</title>
+        <type>SportCar</type>
+        <price>1200000</price>
+        <Details>
+            <foreign>true</foreign>
+            <used>false</used>
+            <age>4</age>
+            <mileage>0</mileage>
+            <specific_details>
+                <specific_detail>max_speed=250km/h</specific_detail>
+                <specific_detail>looks awesome</specific_detail>
+                <specific_detail>buy in credit</specific_detail>
+            </specific_details>
+        </Details>
+    </Vehicle>
+    <Vehicle id = "1">
+        <title>Vehicle2</title>
+        <type>Bicycle</type>
+        <price>100</price>
+        <Details>
+            <used>true</used>
+            <age>2</age>
+            <use_traces>
+                <use_trace>wheels are flatten</use_trace>
+                <use_trace>seat clamp is broken</use_trace>
+            </use_traces>
+            <specific_details>
+                <specific_detail>21 gears</specific_detail>
+                <specific_detail>16 inch wheel diameter</specific_detail>
+                <specific_detail>special offer</specific_detail>
+            </specific_details>
+        </Details>
+    </Vehicle>
+    <Vehicle id="2">
+        <title>Vehicle3</title>
+        <type>SUV</type>
+        <price>36000</price>
+        <Details>
+            <foreign>false</foreign>
+            <used>true</used>
+            <age>7</age>
+            <mileage>120000</mileage>
+            <use_traces>
+                <use_trace>average traces of use</use_trace>
+                <use_trace>scratches near front driver door</use_trace>
+                <use_trace>rust near back wheels</use_trace>
+            </use_traces>
+        </Details>
+    </Vehicle>
+</Market>

@@ -1,0 +1,10 @@
+package ftp_server;
+
+import java.io.IOException;
+
+public class ServerMain {
+    public static void main(String[]args) throws IOException {
+        FtpServer server = new FtpServer();
+        server.start();
+    }
+}

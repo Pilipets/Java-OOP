@@ -1,0 +1,50 @@
+[
+Vehicle{
+  id='0', title = Vehicle1,
+  type=SportCar, price='1200000'
+  vehicle_details=VehicleDetails{
+    foreign='true', used='false',
+    age='4', mileage='0',
+    use_traces=[],
+    specific_details=[max_speed=250km/h, looks awesome, buy in credit]}}, 
+Vehicle{
+  id='1', title = Vehicle2,
+  type=Bicycle, price='100'
+  vehicle_details=VehicleDetails{
+    foreign='false', used='true',
+    age='2', mileage='0',
+    use_traces=[wheels are flatten, seat clamp is broken],
+    specific_details=[21 gears, 16 inch wheel diameter, special offer]}}, 
+Vehicle{
+  id='2', title = Vehicle3,
+  type=SUV, price='36000'
+  vehicle_details=VehicleDetails{
+    foreign='false', used='true',
+    age='7', mileage='120000',
+    use_traces=[average traces of use, scratches near front driver door, rust near back wheels],
+    specific_details=[]}}]
+[
+Vehicle{
+  id='0', title = Vehicle1,
+  type=SportCar, price='1200000'
+  vehicle_details=VehicleDetails{
+    foreign='true', used='false',
+    age='4', mileage='0',
+    use_traces=[],
+    specific_details=[max_speed=250km/h, looks awesome, buy in credit]}}, 
+Vehicle{
+  id='1', title = Vehicle2,
+  type=Bicycle, price='100'
+  vehicle_details=VehicleDetails{
+    foreign='false', used='true',
+    age='2', mileage='0',
+    use_traces=[wheels are flatten, seat clamp is broken],
+    specific_details=[21 gears, 16 inch wheel diameter, special offer]}}, 
+Vehicle{
+  id='2', title = Vehicle3,
+  type=SUV, price='36000'
+  vehicle_details=VehicleDetails{
+    foreign='false', used='true',
+    age='7', mileage='120000',
+    use_traces=[average traces of use, scratches near front driver door, rust near back wheels],
+    specific_details=[]}}]

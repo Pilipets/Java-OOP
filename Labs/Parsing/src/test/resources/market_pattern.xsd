@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:simpleType name="vehicleType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="SUV"/>
+            <xs:enumeration value="Truck"/>
+            <xs:enumeration value="SportCar"/>
+            <xs:enumeration value="MotorBike"/>
+            <xs:enumeration value="Bicycle"/>
+            <xs:enumeration value="ElectricCar"/>
+            <xs:enumeration value="None"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Market">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Vehicle" minOccurs="1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="title" type="xs:string"/>
+                            <xs:element name="type" type="vehicleType"/>
+                            <xs:element name="price" type="xs:int"/>
+                            <xs:element name="Details">
+                                <xs:complexType>
+                                    <xs:sequence>
+                                        <xs:element name="foreign" type="xs:boolean" minOccurs="0"/>
+                                        <xs:element name="used" type="xs:boolean"/>
+                                        <xs:element name="age" type="xs:int"/>
+                                        <xs:element name="mileage" type="xs:int" minOccurs="0"/>
+                                        <xs:element name="use_traces" minOccurs="0" maxOccurs="1">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="use_trace" minOccurs="0" maxOccurs="unbounded" type="xs:string"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="specific_details" minOccurs="0" maxOccurs="1">
+                                            <xs:complexType>
+                                                <xs:sequence>
+                                                    <xs:element name="specific_detail" minOccurs="0" maxOccurs="unbounded"/>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                        <xs:attribute name="id" type="xs:string"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

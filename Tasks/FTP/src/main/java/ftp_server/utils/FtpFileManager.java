@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.SocketChannel;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.EnumSet;
@@ -14,7 +15,8 @@ public class FtpFileManager {
     public FtpFileManager(Configuration config) throws IOException {
         this.config = config;
         fileChannel = FileChannel.open(Paths.get(config.getOutputPath()),
-                EnumSet.of(StandardOpenOption.CREATE_NEW, StandardOpenOption.WRITE));
+                EnumSet.of(StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,
+                        StandardOpenOption.WRITE));
     }
     public void close() throws IOException {
         fileChannel.close();
@@ -30,5 +32,22 @@ public class FtpFileManager {
                 fileChannel.write(buffer);
             }
         } while (res > 0);
+    }
+    public static void writeTo(String sourcePath, SocketChannel receiver) throws IOException {
+        Path path = Paths.get(sourcePath);
+        FileChannel readingChannel = FileChannel.open(path);
+        ByteBuffer buffer = ByteBuffer.allocate(2048);
+        int bytesRead = 0;
+        do {
+            bytesRead = readingChannel.read(buffer);
+            if (bytesRead <= 0)
+                break;
+            buffer.flip();
+            while (bytesRead > 0){
+                bytesRead -= receiver.write(buffer);
+            }
+            buffer.clear();
+        } while (true);
+        readingChannel.close();
     }
 }

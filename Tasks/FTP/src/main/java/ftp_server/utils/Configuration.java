@@ -4,7 +4,7 @@ import java.net.InetSocketAddress;
 
 public class Configuration {
     private InetSocketAddress inetSocketAddress;
-    private String outputPath = "File.zip";
+    private String outputPath = "File.pdf";
     private int BufferSize = 2048;
 
     public Configuration(){

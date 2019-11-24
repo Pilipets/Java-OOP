@@ -28,6 +28,7 @@ public class FtpServer implements AutoCloseable{
         manager.close();
         serverChannel.close();
         selector.close();
+        log.info("Server was closed");
     }
     public void start() throws IOException {
         log.info("Starting the server");
@@ -41,9 +42,11 @@ public class FtpServer implements AutoCloseable{
         serverChannel.configureBlocking(false);
         serverChannel.socket().bind(config.getInetAddress());
         serverChannel.register(selector, SelectionKey.OP_ACCEPT);
+        log.info("Server was configured successfully");
     }
 
     private void acceptConnections() throws IOException {
+        log.info("Listening for the connections");
         while (true) {
             selector.select();
             Set<SelectionKey> selectedKeys = selector.selectedKeys();
@@ -70,8 +73,10 @@ public class FtpServer implements AutoCloseable{
     }
 
     private void handleRead(SelectionKey key) throws IOException {
+        log.info(String.format("Reading data from the client\n",key));
         SocketChannel client = (SocketChannel) key.channel();
         manager.saveDataFrom(client);
+        log.info(String.format("Finished reading from client\n",key));
         client.close();
     }
 }

@@ -1,7 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="904f43dc-119f-4ed2-a1c4-4ea812f1d463" name="Default Changelist" comment="" />
+    <list default="true" id="904f43dc-119f-4ed2-a1c4-4ea812f1d463" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/.gradle/5.2.1/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/src/main/java/ftp_client/ClientMain.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/src/main/java/ftp_client/ClientMain.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/src/main/java/ftp_client/FtpClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/src/main/java/ftp_client/FtpClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/src/main/java/ftp_server/FtpServer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/src/main/java/ftp_server/FtpServer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/src/main/java/ftp_server/utils/Configuration.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/src/main/java/ftp_server/utils/Configuration.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../FTP/src/main/java/ftp_server/utils/FtpFileManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/../FTP/src/main/java/ftp_server/utils/FtpFileManager.java" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,7 +33,11 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
   <component name="ProjectId" id="1TswksWv9F9Ippvlma4WotcjrSm" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="last_directory_selection" value="$PROJECT_DIR$/src/test/java" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -145,6 +162,17 @@
       <updated>1574262256271</updated>
     </task>
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

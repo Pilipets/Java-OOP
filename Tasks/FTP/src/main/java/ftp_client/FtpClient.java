@@ -1,5 +1,7 @@
 package ftp_client;
 
+import ftp_server.utils.FtpFileManager;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
@@ -48,24 +50,7 @@ public class FtpClient {
     }
 
     private void sendFile(SocketChannel concreteClient) throws IOException {
-        String fileName = "C:\\Users\\STAS\\Desktop\\Marks.pdf";
-        Path path = Paths.get(fileName);
-        FileChannel fileChannel = FileChannel.open(path);
-        ByteBuffer buffer = ByteBuffer.allocate(10240);
-        int bytesRead = 0;
-        int counter = 0;
-        do {
-            bytesRead = fileChannel.read(buffer);
-            if (bytesRead <= 0)
-                break;
-            counter += bytesRead;
-            buffer.flip();
-            do {
-                bytesRead -= concreteClient.write(buffer);
-            } while (bytesRead > 0);
-            buffer.clear();
-        } while (true);
-        fileChannel.close();
-        System.out.println("finished");
+        String fileName = "E:\\documents\\Tax_return\\Salary_statement2.pdf";
+        FtpFileManager.writeTo(fileName, concreteClient);
     }
 }

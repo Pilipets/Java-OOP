@@ -5,7 +5,7 @@ import java.net.InetSocketAddress;
 public class Configuration {
     private InetSocketAddress inetSocketAddress;
     private String outputPath = "File.zip";
-    private int BufferSize = 10240;
+    private int BufferSize = 2048;
 
     public Configuration(){
         inetSocketAddress = new InetSocketAddress("127.0.0.1",1111);
@@ -19,7 +19,7 @@ public class Configuration {
         inetSocketAddress = new InetSocketAddress(host,port);
     }
 
-    public InetSocketAddress getActiveAddress(){
+    public InetSocketAddress getInetAddress(){
         return inetSocketAddress;
     }
 

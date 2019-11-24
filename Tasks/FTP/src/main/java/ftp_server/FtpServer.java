@@ -1,6 +1,6 @@
 package ftp_server;
 
-import ftp_server.utils.Configuration;
+import ftp_server.utils.FtpConfiguration;
 import ftp_server.utils.FtpFileManager;
 
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.Set;
 import java.util.logging.Logger;
 
 public class FtpServer implements AutoCloseable{
-    private final Configuration config;
+    private final FtpConfiguration config;
     private ServerSocketChannel serverChannel;
     private Selector selector;
     private final Logger log;
@@ -18,7 +18,7 @@ public class FtpServer implements AutoCloseable{
 
     public FtpServer() throws IOException {
         log = Logger.getLogger(FtpServer.class.getName());
-        config = new Configuration();
+        config = new FtpConfiguration();
         //setUp config
         manager = new FtpFileManager(config);
         log.info("Server was created");

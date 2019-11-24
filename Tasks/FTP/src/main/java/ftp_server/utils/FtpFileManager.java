@@ -10,9 +10,9 @@ import java.nio.file.StandardOpenOption;
 import java.util.EnumSet;
 
 public class FtpFileManager {
-    private final Configuration config;
+    private final FtpConfiguration config;
     private final FileChannel fileChannel;
-    public FtpFileManager(Configuration config) throws IOException {
+    public FtpFileManager(FtpConfiguration config) throws IOException {
         this.config = config;
         fileChannel = FileChannel.open(Paths.get(config.getOutputPath()),
                 EnumSet.of(StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING,

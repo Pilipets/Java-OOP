@@ -2,12 +2,12 @@ package ftp_server.utils;
 
 import java.net.InetSocketAddress;
 
-public class Configuration {
+public class FtpConfiguration {
     private InetSocketAddress inetSocketAddress;
     private String outputPath = "File.pdf";
     private int BufferSize = 2048;
 
-    public Configuration(){
+    public FtpConfiguration(){
         inetSocketAddress = new InetSocketAddress("127.0.0.1",1111);
     }
     public void setConfiguration(String outputPath, int BufferSize){

@@ -24,21 +24,21 @@ public class FtpFileManager {
     public void saveDataFrom(SocketChannel client) throws IOException {
         ByteBuffer buffer = ByteBuffer.allocate(config.getBufferSize());
         int res = 0;
-        do {
+        while (true){
             buffer.clear();
             res = client.read(buffer);
+            if(res <= 0)
+                break;
             buffer.flip();
-            if (res > 0) {
-                fileChannel.write(buffer);
-            }
-        } while (res > 0);
+            fileChannel.write(buffer);
+        }
     }
     public static void writeTo(String sourcePath, SocketChannel receiver) throws IOException {
         Path path = Paths.get(sourcePath);
         FileChannel readingChannel = FileChannel.open(path);
         ByteBuffer buffer = ByteBuffer.allocate(2048);
         int bytesRead = 0;
-        do {
+        while (true){
             bytesRead = readingChannel.read(buffer);
             if (bytesRead <= 0)
                 break;
@@ -47,7 +47,7 @@ public class FtpFileManager {
                 bytesRead -= receiver.write(buffer);
             }
             buffer.clear();
-        } while (true);
+        }
         readingChannel.close();
     }
 }

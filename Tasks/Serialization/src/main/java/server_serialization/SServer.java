@@ -3,45 +3,54 @@ package server_serialization;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SServer implements AutoCloseable {
     private final int port;
-    private final Logger log;
+    private final static Logger logger = Logger.getLogger(SServer.class.getName());
     private Socket clientSocket;
     private ObjectInputStream in;
     private ServerSocket server;
 
-    public SServer() {
+    public SServer(int port) {
         in = null;
-        port = 1111;
-        log = Logger.getLogger(SServer.class.getName());
+        this.port = port;
 
         try {
             server = new ServerSocket(port);
-            log.info(String.format("Serialization Server was created on %d port",port));
+            logger.info(String.format("Serialization Server was created on %d port",port));
         } catch (IOException e){
             server = null;
-            log.info(String.format("Failed to create ServerSocket: %s",e));
+            logger.log(Level.SEVERE, String.format("Failed to create ServerSocket: %s",e));
         }
     }
     @Override
     public void close(){
+        boolean thrownException = false;
         try {
             clientSocket.close();
-            server.close();
-            log.info("Server was successfully closed");
         }catch (IOException e){
-            log.info(String.format("Error while closing the server:%s",e));
+            thrownException = true;
+            logger.log(Level.SEVERE, String.format("Error while closing the client socket: %s",e));
         }
+        try {
+            server.close();
+        } catch (IOException e){
+            thrownException = true;
+            logger.log(Level.SEVERE, String.format("Error while closing the client socket: %s",e));
+        }
+
+        if(!thrownException)
+            logger.info("Server was successfully closed");
     }
 
     public void checkConnection(){
         try {
             clientSocket = server.accept();
-            log.info(String.format("Connection is accepted: %s", clientSocket));
+            logger.info(String.format("Connection is accepted: %s", clientSocket));
         } catch (IOException e){
-            log.info(String.format("Error in listening socket %s",e));
+            logger.log(Level.SEVERE, String.format("Error in listening socket %s",e));
         }
     }
 
@@ -50,9 +59,16 @@ public class SServer implements AutoCloseable {
         try {
             in = new ObjectInputStream(clientSocket.getInputStream());
             obj = in.readObject();
-            in.close();
         } catch (IOException | ClassNotFoundException e) {
-            log.info(String.format("Error in reading data from client: %s",e));
+            logger.log(Level.SEVERE, String.format("Error in reading data from client: %s",e));
+        }
+        finally {
+            try{
+                in.close();
+            }
+            catch (IOException e){
+                logger.log(Level.SEVERE, String.format("Error in reading data from client: %s",e));
+            }
         }
         return obj;
     }

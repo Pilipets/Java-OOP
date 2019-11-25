@@ -17,7 +17,7 @@ public class SimpleTest {
 
     @BeforeClass
     public static void setUp(){
-        server = new SServer();
+        server = new SServer(1111);
         client = new SClient("127.0.0.1",1111);
         example_data = new Vehicle(325654564, "Bugatti Veyron", Vehicle.VehicleType.SportCar, 4.5e8);
     }

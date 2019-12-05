@@ -1,19 +1,18 @@
 package cryptography.testing;
 
-import oop.cryptography.CeasarFilter;
-import oop.cryptography.Filter;
-import oop.cryptography.XorFilter;
+import cryptography.CeasarCoder;
+import cryptography.Coder;
+import cryptography.XorCoder;
 import org.junit.Assert;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.stream.Stream;
 
-public class FilterTest {
+public class CoderTest {
 
     private static <T> byte[] convertToBytes(T data) throws IOException {
         ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
@@ -46,7 +45,7 @@ public class FilterTest {
     @MethodSource("messageProvider")
     public void cypherXORTest(String message) throws IOException, ClassNotFoundException {
         for (int i = 0; i < xorKeys.length; ++i) {
-            Filter f = new XorFilter<String>(xorKeys[i]);
+            Coder f = new XorCoder<String>(xorKeys[i]);
             byte[] inputBytes = convertToBytes(message);
             byte[] encryptedMessage = f.encrypt(message);
             Assert.assertEquals(inputBytes.length, encryptedMessage.length);
@@ -59,7 +58,7 @@ public class FilterTest {
     @MethodSource("messageProvider")
     public void cypherCeasarTest(String message) throws IOException, ClassNotFoundException {
         for(int i = 0; i < ceasarKeys.length; ++i){
-            Filter f = new CeasarFilter<String>(ceasarKeys[i]);
+            Coder f = new CeasarCoder<String>(ceasarKeys[i]);
             byte[] inputBytes = convertToBytes(message);
             byte[] encryptedMessage = f.encrypt(message);
             Assert.assertEquals(inputBytes.length, encryptedMessage.length);

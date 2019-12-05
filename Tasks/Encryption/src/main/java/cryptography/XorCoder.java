@@ -1,11 +1,10 @@
-package oop.cryptography;
+package cryptography;
 
 import java.io.*;
-import java.util.Random;
 
-public class XorFilter<T> extends Filter{
+public class XorCoder<T> extends Coder {
     private final String key;
-    public XorFilter(String key)
+    public XorCoder(String key)
     {
         super(CipherOption.XOR);
         if(key.isEmpty())

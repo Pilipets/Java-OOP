@@ -1,7 +1,7 @@
 package mail_testing;
 
 import mail_testing.src.Whitebox;
-import oop.tasks.impl.MailReceiverCore;
+import oop.tasks.impl.*;
 import org.junit.Assert;
 import org.junit.Test;
 

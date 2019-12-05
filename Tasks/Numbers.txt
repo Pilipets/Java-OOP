@@ -1,2 +1,4 @@
 Encryption - 11
-Reflection - 10
+ReflectionApp - 10
+MailManager - 5
+ThreadGroupInfo - 9

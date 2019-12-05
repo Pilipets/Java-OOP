@@ -1,13 +1,13 @@
-package oop.cryptography;
+package cryptography;
 
 import java.io.IOException;
 
-public abstract class Filter {
+public abstract class Coder {
     protected enum CipherOption{
         Ceaser, XOR
     };
     CipherOption cipherType;
-    protected Filter(CipherOption type){
+    protected Coder(CipherOption type){
         cipherType = type;
     }
     public abstract <T> byte[] encrypt(T data) throws IOException;

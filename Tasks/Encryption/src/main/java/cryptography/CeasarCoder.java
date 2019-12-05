@@ -1,10 +1,10 @@
-package oop.cryptography;
+package cryptography;
 
 import java.io.*;
 
-public class CeasarFilter <T> extends Filter {
-    byte shift;
-    public CeasarFilter(byte shift){
+public class CeasarCoder<T> extends Coder {
+    final byte shift;
+    public CeasarCoder(byte shift){
         super(CipherOption.Ceaser);
         this.shift = shift;
     }

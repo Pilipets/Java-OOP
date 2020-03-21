@@ -1,0 +1,1 @@
+innerWidth=1745, innerHeight=854, pfs=60

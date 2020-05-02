@@ -1,9 +1,7 @@
-package cryptology.cipher;
+package cryptology.ciphers;
 
-// http://www.research.ibm.com/security/mars.pdf
-// http://reto.orgfree.com/us/projectlinks/MARSReport.html
-// http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.35.5887&rep=rep1&type=pdf
 // https://shaih.github.io/pubs/mars/mars.pdf
+// http://reto.orgfree.com/us/projectlinks/MARSReport.html
 /* MARS is another AES candidate, operating on block of 128 bits and supporting key raging from 128 to 448 bits.
  * Work on 32 bit words, based on a type-3 Feistel network in which one word of data is used to update the other
  * 3 during the rounds. Uses simple operations like additions, subtraction and xor. It also uses a lookup table of 512 entries
@@ -12,7 +10,7 @@ package cryptology.cipher;
 public class MarsCipher {
     private final static int BLOCK_LEN = 16; // 16 bytes- 128 bits
     private final static int EXPANDED_KEY_LENGTH = 40; // 40 words
-    private final static int USER_KEY_LENGTH = 15; // 4-14 words
+    private final static int TEMP_KEY_LENGTH = 15; // 15 words
     private static int[] K;
 
     // #define rol32(N, R)    _lrotl(N, R)
@@ -45,12 +43,19 @@ public class MarsCipher {
         return ret;
     }
 
-    // MARS accepts a variable size user-supplied key ranging from 4 to 14 words (i.e., 128 to 448 bits)
+    // MARS algorithm has a variable key length. The interval of the key length is either
+    // from 128 to 448 bit or 128 to 1248 bit with some restrictions. Internal the algorithm
+    // works with 40 key words, which is equal to 1280 bit.
     private static int[] expandKey(byte[] key){
+        // http://reto.orgfree.com/us/projectlinks/keyexp.html
         int[] data = toIntArray(key);
+        int n = key.length/4; // the number of words in the key buffer k[ ];
+        int[] K = new int[EXPANDED_KEY_LENGTH]; // K[ ]is the expanded key array, consisting of 40 words
+        int[] T = new int[TEMP_KEY_LENGTH]; // T[ ]is a temporary array, consisting of 15 words
+        int[] B = {0xa4a8d57b, 0x5b5d193b, 0xc8a8309b, 0x73f9a978};// B[ ]is a fixed table of four words
 
-        int n = key.length/4;
-        int[] T = new int[USER_KEY_LENGTH];
+        // Initialize T[ ]with key data
+        // T[0 ... n-1] = k[0 ... n-1], T[n] =n, T[n + 1...14] = 0
         for(int i = 0; i < T.length;i++){
             if(i<data.length) {
                 T[i] = data[i];
@@ -61,32 +66,36 @@ public class MarsCipher {
             }
         }
 
-        int[] tmp = new int[EXPANDED_KEY_LENGTH];
+        // Four iterations, computing 10 words of K[ ]in each
         for(int j = 0; j < 4; j++){
+            // Linear transformation
             for(int i=0; i < T.length; i++)
-                T[i] = T[i] ^ (rotl(T[Math.abs(i-7 % USER_KEY_LENGTH)]
-                        ^ T[Math.abs(i-2 % USER_KEY_LENGTH)],3) ^ (4*i + j));
+                T[i] = T[i] ^ (rotl(T[Math.abs(i-7 % TEMP_KEY_LENGTH)]
+                        ^ T[Math.abs(i-2 % TEMP_KEY_LENGTH)],3) ^ (4*i + j));
+            // Four stirring rounds
             for(int c = 0; c < 4; c++)
                 for(int i = 0; i < T.length; i++)
-                    T[i] = T[i] + rotl(SBox[T[Math.abs(i-1 % USER_KEY_LENGTH)] & 0x000001ff],9);
+                    T[i] = T[i] + rotl(SBox[T[Math.abs(i-1 % TEMP_KEY_LENGTH)] & 0x000001ff],9);
+            // store next 10 words into K[ ]
             for(int i = 0; i <= 9; i++)
-                tmp[10*j+i] = T[4*i % USER_KEY_LENGTH];
+                K[10*j+i] = T[4*i % TEMP_KEY_LENGTH];
         }
 
-        int[] B = {0xa4a8d57b, 0x5b5d193b, 0xc8a8309b, 0x73f9a978};
+        // Modify multiplication keys
         int j, w, m, r, p;
         for(int i = 5; i <= 35; i++){
-            j = tmp[i] & 0x00000003;
-            w = tmp[i] | 0x00000003;
-            m = generateMask(w);
-            r = tmp[i-1] & 0x0000001f;
-            p = rotl(B[j], r);
-            tmp[i] = w ^ (p & m);
+            j = K[i] & 0x00000003; // K[i] with both of the least two bits set to 1
+            w = K[i] | 0x00000003; // K[i] with both of the least two bits set to 1
+            m = generateMask(w); // M = 1 if w` belongs to a sequence of ten consecutive 0’s or 1’s in w
+            r = K[i-1] & 0x0000001f; // least five bits of K[i-1] // Rotation amount
+            p = rotl(B[j], r); // Select a pattern from the fixed table and rotate it
+            K[i] = w ^ (p & m); // Modify K[i] with p under the control of the mask M
         }
-        return tmp;
+        return K;
     }
 
     private static int generateMask(int x){
+        // Generate a bit-mask M
         int m;
         m = (~x ^ (x>>>1)) & 0x7fffffff;
         m &= (m >> 1) & (m >> 2);
@@ -106,45 +115,56 @@ public class MarsCipher {
 
     private static byte[] encryptBlock(byte[] in){
         int[] data = toIntArray(in);
+
+        // forward mixing(key addition)
         int A = data[0] + K[0];
         int B = data[1] + K[1];
         int C = data[2] + K[2];
         int D = data[3] + K[3];
 
+        // forward mixing(eight rounds of unkeyed forward mixing) - type-3 Feistel mixing
         int aux;
-        //forward mixing
-        for(int i = 0; i<= 7; i++){
-            B = B ^ SBox[A & 0xff];
-            B = B + SBox[(rotr(A,8) & 0xff) + 256];
-            C = C + SBox[rotr(A,16) & 0xff];
-            D = D ^ SBox[(rotr(A,24) & 0xff) + 256];
+        for(int i = 0; i <= 7; i++){
+            // In each round we use one data word (called the source word) to modify the other
+            // three data words (called the target words). If we denote the four bytes of the source
+            // words by b0; b1; b2; b3 (where b0 is the lowest byte and b3 is the highest byte), then
+            // we use b0; b2 as indices into the S-box S0 and b1; b3 as indices into the S-box S1
+            B = B ^ SBox[A & 0xff]; // xor S0[b0] into the first target word
+            B = B + SBox[(rotr(A,8) & 0xff) + 256]; // add S1[b1] to the same word
+            C = C + SBox[rotr(A,16) & 0xff]; // add S0[b2] to the second target word
+            D = D ^ SBox[(rotr(A,24) & 0xff) + 256]; //  xor S1[b3] to the third target word
 
-            A = rotr(A,24);
+            A = rotr(A,24); // rotate the source word by 24 positions to the right
 
-            if(i == 1 || i == 5) A = A + B;
-            if(i == 0 || i == 4) A = A + D;
+            if(i == 1 || i == 5) A = A + B; // after the first and fifth rounds we add the third target word back into the source
+            if(i == 0 || i == 4) A = A + D; // after the second and sixth round we add the first target word back into the source word
 
-            aux = A;
-            A = B;
-            B = C;
-            C = D;
-            D = aux;
+            // for the next round we rotate the four words
+            aux = A; //
+            A = B; // the current first target word becomes the next source word
+            B = C; // the current second target word becomes the next first target word
+            C = D; // the current third target word becomes the next second target word
+            D = aux; // the current source word become the next third target word.
         }
 
-        //cryptographic core
+        // cryptographic core (eight rounds of keyed forward transformation/backwards transformation)
         for(int i = 0; i <= 15; i++){
             int[] eout = EFunc(A, K[2*i+4], K[2*i+5]);
+            // the three output words from the E-function are added or xored to the other three data words
 
-            A = rotl(A,13);
-            C = C + eout[1];
+            A = rotl(A,13); // source word is rotated by 13 positions to the left
 
+            /* To ensure that the cipher has the same resistance to chosen ciphertext attacks as it has for chosen
+            plaintext attacks, the three outputs from the E-function are used in a different order in the first
+            eight rounds than in the last eight rounds */
+            C = C + eout[1]; // add the first output of the E function to the second target word
             if(i < 8) {
-                B = B + eout[0];
-                D = D ^ eout[2];
+                B = B + eout[0]; // add the first output of the E-function to the first target word
+                D = D ^ eout[2]; // xor the third output into the third target word
             }
             else{
-                D = D + eout[0];
-                B = B ^ eout[2];
+                D = D + eout[0]; // add the second output of the E-function to the third target word
+                B = B ^ eout[2]; // xor the third output into the first target word
             }
 
             aux = A;
@@ -154,24 +174,30 @@ public class MarsCipher {
             D = aux;
         }
 
-        //backward mixing
+        // backwards mixing(eight rounds of unkeyed backwards mixing)
         for(int i = 0; i <= 7; i++){
-            if(i == 3 || i == 7) A = A - B;
-            if(i == 2 || i == 6) A = A - D;
+            // In each round one source word to modify the other three
+            // target words. Denote the four bytes of the source words by b0; b1; b2; b3 as before. We use b0; b2 as
+            // indices into the S-box S1 and b1; b3 as indices into the S-box S0.
 
-            B = B ^ SBox[(A & 0xff) + 256];
-            C = C - SBox[rotr(A,24) & 0xff];
-            D = D - SBox[(rotr(A,16) & 0xff) + 256];
-            D = D ^ SBox[rotr(A,8) & 0xff];
+            if(i == 3 || i == 7) A = A - B; // before the fourth and eighth rounds we subtract the first target word from the source word
+            if(i == 2 || i == 6) A = A - D; // before the third and seventh round we subtract the third target word from the source word
 
-            A = rotl(A,24);
+            B = B ^ SBox[(A & 0xff) + 256]; // xor S1[b0] into the first target word
+            C = C - SBox[rotr(A,24) & 0xff]; // subtract S0[b3] from the second data word
+            D = D - SBox[(rotr(A,16) & 0xff) + 256]; // subtract S1[b2] from the third target word
+            D = D ^ SBox[rotr(A,8) & 0xff]; // xor S0[b1] also into the third target word
+
+            A = rotl(A,24); // rotate the source word by 24 positions to the left
 
             aux = A;
-            A = B;
-            B = C;
-            C = D;
-            D = aux;
+            A = B; // the current first target word becomes the next source word
+            B = C; // the current second target word becomes the next first target word
+            C = D; // the current third target word becomes the next second target word
+            D = aux; // the current source word become the next third target word
         }
+
+        // backwards mixing(key subtraction)
         A = A - K[36];
         B = B - K[37];
         C = C - K[38];
@@ -185,17 +211,20 @@ public class MarsCipher {
         return toByteArray(data);
     }
 
+    // keyed E-function (E for expansion) which is based on a novel
+    // combination of multiplication, data-dependent rotations, and an S-box lookup
     private static int[] EFunc(int in, int k1, int k2){
-        int M, L, R;
-        M = in + k1;
-        R = rotl(in,13) * k2;
-        L = SBox[M & 0x000001ff];
+        int M, L, R; // left, middle and right -  three “lines” in the function
+
+        M = in + k1; // sum of the source word and the first key word
+        R = rotl(in,13) * k2; // source word rotated by 13 positions to the left, multiply by 2nd key word, which must be odd
+        L = SBox[M & 0x000001ff]; // view the lowest nine bits of M as an index to a 512-entry S-box
+        R = rotl(R,5); // rotate R by 5 positions to the left
+        M = rotl(M,R & 0x0000001f); // rotate to the left by five lowest bits of R
+        L = L ^ R; // xor R into L
         R = rotl(R,5);
-        M = rotl(M,R & 0x0000001f);
-        L = L ^ R;
-        R = rotl(R,5);
-        L = L ^ R;
-        L = rotl(L,R & 0x0000001f);
+        L = L ^ R; // xor R into L
+        L = rotl(L,R & 0x0000001f); // rotate to the left by five lowest bits of R
 
         int[] ret = new int[3];
         ret[0] = L;
@@ -286,7 +315,7 @@ public class MarsCipher {
     }
 
     public static byte[] encrypt(byte[] in, byte[] key){
-        K = expandKey(key);
+        K = expandKey(key); // expand user key to internal key
 
         int length = BLOCK_LEN - in.length % BLOCK_LEN;
         byte[] padding = new byte[length];
@@ -350,6 +379,8 @@ public class MarsCipher {
         return tmp;
     }
 
+    // In the design of the S-box S, we generated the entries of S in a “pseudorandom fashion” and tested
+    // that the resulting S-box has good differential and linear properties
     private final static int[] SBox ={
             0x09d0c479, 0x28c8ffe0, 0x84aa6c39, 0x9dad7287, 0x7dff9be3, 0xd4268361, 0xc96da1d4, 0x7974cc93, 0x85d0582e, 0x2a4b5705,
             0x1ca16a62, 0xc3bd279d, 0x0f1f25e5, 0x5160372f, 0xc695c1fb, 0x4d7ff1e4, 0xae5f6bf4, 0x0d72ee46, 0xff23de8a, 0xb1cf8e83,

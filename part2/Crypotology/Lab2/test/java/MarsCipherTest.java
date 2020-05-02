@@ -1,4 +1,4 @@
-import cryptology.cipher.MarsCipher;
+import cryptology.ciphers.MarsCipher;
 import org.junit.Assert;
 import org.junit.Test;
 

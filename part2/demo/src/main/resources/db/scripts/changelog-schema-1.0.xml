@@ -1,0 +1,210 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="druid (generated)" id="1591827818738-1">
+        <createTable tableName="accounts">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ISBLOCKED" type="BIT(1)"/>
+            <column name="MONEYAMOUNT" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-2">
+        <createTable tableName="bank_acc">
+            <column name="BANK_ID" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ACC_ID" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-3">
+        <createTable tableName="bank_admins">
+            <column name="BANK_ID" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USER_ID" type="INT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-4">
+        <createTable tableName="bank_stats">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="TOTAL_PROFIT" type="DECIMAL(19, 2)"/>
+            <column name="TOTAL_REPLENISH" type="DECIMAL(19, 2)"/>
+            <column name="TOTAL_TRANSFER" type="DECIMAL(19, 2)"/>
+            <column name="BANK_ID" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-5">
+        <createTable tableName="banks">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="TopUpFee" type="DOUBLE"/>
+            <column name="TransferFee" type="DOUBLE"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-6">
+        <createTable tableName="cards">
+            <column name="CARDNUMBER" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ACCID" type="INT"/>
+            <column name="CLIENTID" type="INT"/>
+            <column name="PIN" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-7">
+        <createTable tableName="intervals">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="dateFrom" type="date"/>
+            <column name="dateTo" type="date"/>
+            <column name="leftDate" type="date"/>
+            <column name="MAXVAL" type="INT"/>
+            <column name="MONEY" type="VARCHAR(255)"/>
+            <column name="rightDate" type="date"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-8">
+        <createTable tableName="payments">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="CARDNUMBER" type="INT"/>
+            <column name="CLIENTID" type="INT"/>
+            <column name="date" type="date"/>
+            <column name="INFO" type="VARCHAR(255)"/>
+            <column name="MONEY" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-9">
+        <createTable tableName="periodstats">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="dateFrom" type="date"/>
+            <column name="dateTo" type="date"/>
+            <column name="InToOut" type="DOUBLE"/>
+            <column name="TOTAL_REPLENISH" type="DECIMAL(19, 2)"/>
+            <column name="TOTAL_TRANSFER" type="DECIMAL(19, 2)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-10">
+        <createTable tableName="persistent_logins">
+            <column name="series" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="last_used" type="datetime"/>
+            <column name="TOKEN" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="USERNAME" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-11">
+        <createTable tableName="topup">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="CARDNUMBER" type="INT"/>
+            <column name="date" type="date"/>
+            <column name="MONEY" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-12">
+        <createTable tableName="user_profile">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="TYPE" type="VARCHAR(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-13">
+        <createTable tableName="user_user_profile">
+            <column name="USER_ID" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="USER_PROFILE_ID" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-14">
+        <createTable tableName="users">
+            <column autoIncrement="true" name="id" type="INT">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="ENABLED" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="NAME" type="VARCHAR(255)"/>
+            <column name="PASSWORD" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="USERNAME" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-15">
+        <createIndex indexName="FK75opb00mqjq7qn2n9rnmyrdx5" tableName="bank_acc">
+            <column name="ACC_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-16">
+        <createIndex indexName="FK80911algx0jqbywif5sdbcqkj" tableName="bank_acc">
+            <column name="BANK_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-17">
+        <createIndex indexName="FKapnr8hvny0mfkbwc0w8db78xc" tableName="bank_stats">
+            <column name="BANK_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-18">
+        <createIndex indexName="FKe10l6ptplhrnfdkpdhnkuurel" tableName="user_user_profile">
+            <column name="USER_PROFILE_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-19">
+        <createIndex indexName="FKouhnv4ng9d0ujpvhoa2rpwape" tableName="bank_admins">
+            <column name="USER_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-20">
+        <createIndex indexName="FKtqrbp272vlu991fgs4akhw47e" tableName="bank_admins">
+            <column name="BANK_ID"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-21">
+        <addForeignKeyConstraint baseColumnNames="ACC_ID" baseTableName="bank_acc" constraintName="FK75opb00mqjq7qn2n9rnmyrdx5" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="accounts" validate="true"/>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-22">
+        <addForeignKeyConstraint baseColumnNames="BANK_ID" baseTableName="bank_acc" constraintName="FK80911algx0jqbywif5sdbcqkj" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="banks" validate="true"/>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-23">
+        <addForeignKeyConstraint baseColumnNames="BANK_ID" baseTableName="bank_stats" constraintName="FKapnr8hvny0mfkbwc0w8db78xc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="banks" validate="true"/>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-24">
+        <addForeignKeyConstraint baseColumnNames="USER_PROFILE_ID" baseTableName="user_user_profile" constraintName="FKe10l6ptplhrnfdkpdhnkuurel" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user_profile" validate="true"/>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-25">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="bank_admins" constraintName="FKouhnv4ng9d0ujpvhoa2rpwape" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-26">
+        <addForeignKeyConstraint baseColumnNames="USER_ID" baseTableName="user_user_profile" constraintName="FKqhkr83x49jy56cyfyhdvyidog" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="users" validate="true"/>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827818738-27">
+        <addForeignKeyConstraint baseColumnNames="BANK_ID" baseTableName="bank_admins" constraintName="FKtqrbp272vlu991fgs4akhw47e" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="banks" validate="true"/>
+    </changeSet>
+</databaseChangeLog>

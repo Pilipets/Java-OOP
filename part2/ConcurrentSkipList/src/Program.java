@@ -30,7 +30,7 @@ class MyConsumer  implements Runnable {
 }
 public class Program {
     public static void main(String[] args) throws InterruptedException {
-        FineGrainedSkipList list = new FineGrainedSkipList(100);
+        FineGrainedSkipList list = new FineGrainedSkipList(10);
         System.out.println("Start execution flow");
         Thread[] threads = new Thread[5];
         for(int i = 0; i < threads.length; ++i){

@@ -1,0 +1,459 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+    <changeSet author="druid (generated)" id="1591827789721-11">
+        <insert tableName="user_profile">
+            <column name="id" valueNumeric="2"/>
+            <column name="TYPE" value="ADMIN"/>
+        </insert>
+        <insert tableName="user_profile">
+            <column name="id" valueNumeric="1"/>
+            <column name="TYPE" value="USER"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-13">
+        <insert tableName="users">
+            <column name="id" valueNumeric="1"/>
+            <column name="ENABLED" valueBoolean="false"/>
+            <column name="NAME" value="123"/>
+            <column name="PASSWORD" value="$2a$10$uvorroWc0wNNkevb7GgRoO7QNucZ58Foo9SJU8bjRp3xlGDdhIfu."/>
+            <column name="USERNAME" value="123"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="2"/>
+            <column name="ENABLED" valueBoolean="false"/>
+            <column name="NAME" value="Hlib Pylypets"/>
+            <column name="PASSWORD" value="$2a$10$DZAKQEg/ERFVPDIgfXxwUORyG.eXgLm4gcb/iuuEILoFRQSnOO6PC"/>
+            <column name="USERNAME" value="sumix"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="3"/>
+            <column name="ENABLED" valueBoolean="false"/>
+            <column name="NAME" value="Sylable"/>
+            <column name="PASSWORD" value="$2a$10$dwtHevK5N7jzjVmH9K2z3.v6zMjuDglpeTWV8QbwvhwLTUyrx0aqu"/>
+            <column name="USERNAME" value="fantom"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="4"/>
+            <column name="ENABLED" valueBoolean="false"/>
+            <column name="NAME" value="Temp user"/>
+            <column name="PASSWORD" value="$2a$10$BUu8yb7HCrXjJdiAUqhSAeNW.7/U9KiIf4wEMFHtrQ4gcaGeips/i"/>
+            <column name="USERNAME" value="Felon"/>
+        </insert>
+        <insert tableName="users">
+            <column name="id" valueNumeric="5"/>
+            <column name="ENABLED" valueBoolean="false"/>
+            <column name="NAME" value="Hlib Pylypets"/>
+            <column name="PASSWORD" value="$2a$10$eixTWtDdL5cSz7yoFNT51OaXUDOVfc7JG5Zfphr4rnej9nBAdLcKG"/>
+            <column name="USERNAME" value="admin"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-12">
+        <insert tableName="user_user_profile">
+            <column name="USER_ID" valueNumeric="1"/>
+            <column name="USER_PROFILE_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="user_user_profile">
+            <column name="USER_ID" valueNumeric="2"/>
+            <column name="USER_PROFILE_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="user_user_profile">
+            <column name="USER_ID" valueNumeric="3"/>
+            <column name="USER_PROFILE_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="user_user_profile">
+            <column name="USER_ID" valueNumeric="4"/>
+            <column name="USER_PROFILE_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="user_user_profile">
+            <column name="USER_ID" valueNumeric="5"/>
+            <column name="USER_PROFILE_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="user_user_profile">
+            <column name="USER_ID" valueNumeric="1"/>
+            <column name="USER_PROFILE_ID" valueNumeric="2"/>
+        </insert>
+        <insert tableName="user_user_profile">
+            <column name="USER_ID" valueNumeric="5"/>
+            <column name="USER_PROFILE_ID" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-5">
+        <insert tableName="banks">
+            <column name="id" valueNumeric="1"/>
+            <column name="NAME" value="Volks Bank"/>
+            <column name="TopUpFee" valueNumeric="0.005"/>
+            <column name="TransferFee" valueNumeric="0.01"/>
+        </insert>
+        <insert tableName="banks">
+            <column name="id" valueNumeric="2"/>
+            <column name="NAME" value="Privat Bank"/>
+            <column name="TopUpFee" valueNumeric="0.01"/>
+            <column name="TransferFee" valueNumeric="0.02"/>
+        </insert>
+        <insert tableName="banks">
+            <column name="id" valueNumeric="3"/>
+            <column name="NAME" value="JP Morgan Chase"/>
+            <column name="TopUpFee" valueNumeric="0.05"/>
+            <column name="TransferFee" valueNumeric="0.0015"/>
+        </insert>
+        <insert tableName="banks">
+            <column name="id" valueNumeric="4"/>
+            <column name="NAME" value="Monobank"/>
+            <column name="TopUpFee" valueNumeric="0.01"/>
+            <column name="TransferFee" valueNumeric="0.05"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-1">
+        <insert tableName="accounts">
+            <column name="id" valueNumeric="1"/>
+            <column name="ISBLOCKED" valueBoolean="true"/>
+            <column name="MONEYAMOUNT" valueNumeric="12941"/>
+        </insert>
+        <insert tableName="accounts">
+            <column name="id" valueNumeric="2"/>
+            <column name="ISBLOCKED" valueBoolean="false"/>
+            <column name="MONEYAMOUNT" valueNumeric="6404"/>
+        </insert>
+        <insert tableName="accounts">
+            <column name="id" valueNumeric="3"/>
+            <column name="ISBLOCKED" valueBoolean="false"/>
+            <column name="MONEYAMOUNT" valueNumeric="1037"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-2">
+        <insert tableName="bank_acc">
+            <column name="BANK_ID" valueNumeric="1"/>
+            <column name="ACC_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="bank_acc">
+            <column name="BANK_ID" valueNumeric="1"/>
+            <column name="ACC_ID" valueNumeric="2"/>
+        </insert>
+        <insert tableName="bank_acc">
+            <column name="BANK_ID" valueNumeric="2"/>
+            <column name="ACC_ID" valueNumeric="3"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-3">
+        <insert tableName="bank_admins">
+            <column name="BANK_ID" valueNumeric="1"/>
+            <column name="USER_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="bank_admins">
+            <column name="BANK_ID" valueNumeric="2"/>
+            <column name="USER_ID" valueNumeric="5"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-4">
+        <insert tableName="bank_stats">
+            <column name="id" valueNumeric="1"/>
+            <column name="TOTAL_PROFIT" valueNumeric="5616.00"/>
+            <column name="TOTAL_REPLENISH" valueNumeric="25000.00"/>
+            <column name="TOTAL_TRANSFER" valueNumeric="19900.00"/>
+            <column name="BANK_ID" valueNumeric="1"/>
+        </insert>
+        <insert tableName="bank_stats">
+            <column name="id" valueNumeric="2"/>
+            <column name="TOTAL_PROFIT" valueNumeric="10004.00"/>
+            <column name="TOTAL_REPLENISH" valueNumeric="61277.00"/>
+            <column name="TOTAL_TRANSFER" valueNumeric="65799.00"/>
+            <column name="BANK_ID" valueNumeric="2"/>
+        </insert>
+    </changeSet>
+    <changeSet author="druid (generated)" id="1591827789721-6">
+        <insert tableName="cards">
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="ACCID" valueNumeric="2"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="PIN" valueNumeric="2167"/>
+        </insert>
+        <insert tableName="cards">
+            <column name="CARDNUMBER" valueNumeric="5678"/>
+            <column name="ACCID" valueNumeric="1"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="PIN" valueNumeric="5678"/>
+        </insert>
+        <insert tableName="cards">
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="ACCID" valueNumeric="3"/>
+            <column name="CLIENTID" valueNumeric="2"/>
+            <column name="PIN" valueNumeric="8908"/>
+        </insert>
+    </changeSet>
+    <!--
+    <changeSet author="druid (generated)" id="1591827789721-7">
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="1"/>
+            <column name="dateFrom" valueDate="2020-04-19"/>
+            <column name="dateTo" valueDate="2020-05-25"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="1000"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,-345"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="2"/>
+            <column name="dateFrom" valueDate="2020-05-20"/>
+            <column name="dateTo" valueDate="2020-05-27"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="1000"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,-345"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="3"/>
+            <column name="dateFrom" valueDate="2020-05-20"/>
+            <column name="dateTo" valueDate="2020-05-27"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="1000"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,-345"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="4"/>
+            <column name="dateFrom" valueDate="2020-05-21"/>
+            <column name="dateTo" valueDate="2020-05-25"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="2500"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,-345,-2500"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="5"/>
+            <column name="dateFrom" valueDate="2020-05-19"/>
+            <column name="dateTo" valueDate="2020-05-27"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="2500"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,-345,-2500"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="6"/>
+            <column name="dateFrom" valueDate="2020-05-21"/>
+            <column name="dateTo" valueDate="2020-05-26"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="1000"/>
+            <column name="MONEY" value="345,-678,50,-1000"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="7"/>
+            <column name="dateFrom" valueDate="2020-05-20"/>
+            <column name="dateTo" valueDate="2020-05-28"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="1000"/>
+            <column name="MONEY" value="-1000,-200"/>
+            <column name="rightDate" valueDate="2020-05-25"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="8"/>
+            <column name="dateFrom" valueDate="2020-05-20"/>
+            <column name="dateTo" valueDate="2020-05-27"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="1000"/>
+            <column name="MONEY" value="345,-678,50,-1000,599"/>
+            <column name="rightDate" valueDate="2020-05-25"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="9"/>
+            <column name="dateFrom" valueDate="2020-05-20"/>
+            <column name="dateTo" valueDate="2020-05-27"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="2500"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,335,-345,-2500"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="10"/>
+            <column name="dateFrom" valueDate="2020-05-20"/>
+            <column name="dateTo" valueDate="2020-05-29"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="2500"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,335,-345,-2500"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="11"/>
+            <column name="dateFrom" valueDate="2020-05-23"/>
+            <column name="dateTo" valueDate="2020-05-30"/>
+            <column name="leftDate" valueDate="2020-05-23"/>
+            <column name="MAXVAL" valueNumeric="2500"/>
+            <column name="MONEY" value="150,1000,1000,335,-345,-2500"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+        <insert tableName="intervals">
+            <column name="id" valueNumeric="12"/>
+            <column name="dateFrom" valueDate="2020-05-21"/>
+            <column name="dateTo" valueDate="2020-05-29"/>
+            <column name="leftDate" valueDate="2020-05-22"/>
+            <column name="MAXVAL" valueNumeric="2500"/>
+            <column name="MONEY" value="600,-678,150,1000,1000,335,-345,-2500"/>
+            <column name="rightDate" valueDate="2020-05-23"/>
+        </insert>
+    </changeSet>
+    -->
+    <changeSet author="druid (generated)" id="1591827789721-8">
+        <insert tableName="payments">
+            <column name="id" valueNumeric="1"/>
+            <column name="CARDNUMBER" valueNumeric="5678"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="date" valueDate="2020-05-22"/>
+            <column name="INFO" value="Dummy"/>
+            <column name="MONEY" valueNumeric="1000"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="2"/>
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="date" valueDate="2020-05-22"/>
+            <column name="INFO" value="New card payment"/>
+            <column name="MONEY" valueNumeric="678"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="3"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="CLIENTID" valueNumeric="2"/>
+            <column name="date" valueDate="2020-05-22"/>
+            <column name="INFO" value="My first payment."/>
+            <column name="MONEY" valueNumeric="678"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="4"/>
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="INFO" value="Unblocked?!"/>
+            <column name="MONEY" valueNumeric="1000"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="5"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="CLIENTID" valueNumeric="2"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="INFO" value="Temporary payment"/>
+            <column name="MONEY" valueNumeric="345"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="6"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="CLIENTID" valueNumeric="2"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="INFO" value="New card payment"/>
+            <column name="MONEY" valueNumeric="2500"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="7"/>
+            <column name="CARDNUMBER" valueNumeric="5678"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="date" valueDate="2020-05-25"/>
+            <column name="INFO" value="Try again"/>
+            <column name="MONEY" valueNumeric="200"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="8"/>
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="date" valueDate="2020-05-28"/>
+            <column name="INFO" value="Try again"/>
+            <column name="MONEY" valueNumeric="5000"/>
+        </insert>
+        <insert tableName="payments">
+            <column name="id" valueNumeric="9"/>
+            <column name="CARDNUMBER" valueNumeric="5678"/>
+            <column name="CLIENTID" valueNumeric="3"/>
+            <column name="date" valueDate="2020-05-28"/>
+            <column name="INFO" value="Testing Stats"/>
+            <column name="MONEY" valueNumeric="909"/>
+        </insert>
+    </changeSet>
+    <!--
+    <changeSet author="druid (generated)" id="1591827789721-9">
+        <insert tableName="periodstats">
+            <column name="id" valueNumeric="1"/>
+            <column name="dateFrom" valueDate="2020-05-21"/>
+            <column name="dateTo" valueDate="2020-05-27"/>
+            <column name="InToOut" valueNumeric="0.876"/>
+            <column name="TOTAL_REPLENISH" valueNumeric="3085.00"/>
+            <column name="TOTAL_TRANSFER" valueNumeric="3523.00"/>
+        </insert>
+        <insert tableName="periodstats">
+            <column name="id" valueNumeric="2"/>
+            <column name="dateFrom" valueDate="2020-05-21"/>
+            <column name="dateTo" valueDate="2020-05-26"/>
+            <column name="InToOut" valueNumeric="0.876"/>
+            <column name="TOTAL_REPLENISH" valueNumeric="3085.00"/>
+            <column name="TOTAL_TRANSFER" valueNumeric="3523.00"/>
+        </insert>
+        <insert tableName="periodstats">
+            <column name="id" valueNumeric="3"/>
+            <column name="dateFrom" valueDate="2020-05-20"/>
+            <column name="dateTo" valueDate="2020-05-25"/>
+            <column name="InToOut" valueNumeric="0.876"/>
+            <column name="TOTAL_REPLENISH" valueNumeric="3085.00"/>
+            <column name="TOTAL_TRANSFER" valueNumeric="3523.00"/>
+        </insert>
+    </changeSet>
+    -->
+    <changeSet author="druid (generated)" id="1591827789721-10">
+        <insert tableName="topup">
+            <column name="id" valueNumeric="1"/>
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="date" valueDate="2020-05-22"/>
+            <column name="MONEY" valueNumeric="345"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="2"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="date" valueDate="2020-05-22"/>
+            <column name="MONEY" valueNumeric="600"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="3"/>
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="MONEY" valueNumeric="50"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="4"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="MONEY" valueNumeric="150"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="5"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="MONEY" valueNumeric="1000"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="6"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="MONEY" valueNumeric="1000"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="7"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="date" valueDate="2020-05-23"/>
+            <column name="MONEY" valueNumeric="335"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="8"/>
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="date" valueDate="2020-05-25"/>
+            <column name="MONEY" valueNumeric="599"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="9"/>
+            <column name="CARDNUMBER" valueNumeric="2167"/>
+            <column name="date" valueDate="2020-05-27"/>
+            <column name="MONEY" valueNumeric="50"/>
+        </insert>
+        <insert tableName="topup">
+            <column name="id" valueNumeric="10"/>
+            <column name="CARDNUMBER" valueNumeric="8908"/>
+            <column name="date" valueDate="2020-05-28"/>
+            <column name="MONEY" valueNumeric="495"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,53 @@
+package core.commands;
+
+import bank_schema.*;
+
+import javax.servlet.ServletException;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class AuthorizationCmd extends BaseCmd {
+    @Override
+    public void execute() throws IOException, ServletException {
+        User user;
+        if (req.getSession().getAttribute("registrated") == null
+                || !(boolean) req.getSession().getAttribute("registrated")) {
+            user = db.getUser(req.getParameter("login"), req.getParameter("pass"));
+            req.getSession().setAttribute("User", user);
+        } else {
+            user = (User) req.getSession().getAttribute("User");
+            req.getSession().setAttribute("registrated", false);
+        }
+        if (user != null) {
+            resp.getWriter().write(user.getName());
+            if (user.getIsSuperUser()) {
+                Bank bank = db.getBank(user);
+
+                List<Card> blockedCards = db.getBlockedCards(bank.getAccounts());
+
+                req.getSession().setAttribute("blockedCards", blockedCards);
+                req.getSession().setAttribute("bankName", bank.getName());
+                req.getRequestDispatcher("/admin.jsp").forward(req, resp);
+            } else {
+                req.getSession().setAttribute("block", false);
+                req.getSession().setAttribute("Payments", null);
+                List<Card> cards = db.getUsersCards(user);
+                List<Account> accounts = db.getAccounts(cards);
+                Map<Card, Account> cardAccountMap = new HashMap<>();
+                for (int i = 0; i < cards.size(); i++) {
+                    cardAccountMap.put(cards.get(i), accounts.get(i));
+                    resp.getWriter().write(cards.get(i).getCardNumber());
+                }
+
+                req.getSession().setAttribute("cardAccountMap", cardAccountMap);
+                resp.sendRedirect("client?command=Payments");
+            }
+        } else {
+            req.setAttribute("Error", "User not found");
+            req.getRequestDispatcher("/errorPage.jsp").forward(req, resp);
+        }
+    }
+}
+

@@ -40,7 +40,6 @@ public class FineGrainedSkipList extends AbstractSet<Integer> {
 
     /**
      * Create a skip list with a maximum level.
-     * TODO: add complexity description
      * @param maxLevel The maximum level for this SkipList
      */
     public FineGrainedSkipList(int maxLevel) {
@@ -214,7 +213,6 @@ public class FineGrainedSkipList extends AbstractSet<Integer> {
 
     /**
      * Determines if node was found at the highest level, not marked for removal, and fully linked.
-     * TODO: add complexity description
      */
     public boolean canDelete(Node node, int highestLevelFound) {
         return !node.markedForRemoval
@@ -236,7 +234,6 @@ public class FineGrainedSkipList extends AbstractSet<Integer> {
 
     /**
      * Finds "value" in the skiplist, returning highest level of occurrence or -1 if absent.
-     * TODO: add complexity description
      */
     public int find(Object value, Node[] predecessors, Node[] successors) {
         if (! (value instanceof Integer)) {

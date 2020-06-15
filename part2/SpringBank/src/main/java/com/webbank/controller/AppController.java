@@ -2,24 +2,16 @@ package com.webbank.controller;
 
 import com.webbank.model.*;
 import com.webbank.service.BusinessServiceImpl;
-import com.webbank.service.UserProfileServiceImpl;
 import com.webbank.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.security.authentication.AuthenticationTrustResolver;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -33,24 +25,17 @@ public class AppController {
    @Autowired
    private UserService userService;
    @Autowired
-   private UserProfileServiceImpl userProfileService;
-   @Autowired
-   private MessageSource messageSource;
-   @Autowired
-   private AuthenticationTrustResolver authenticationTrustResolver;
-   @Autowired
    private BusinessServiceImpl businessService;
 
    @GetMapping(value = { "/", "/userPage" })
    public String userPage(HttpServletRequest request) {
-       String username = getPrincipal();
-       User user = userService.findByUsername(username);
+       User user = userService.getContextUser();
        for(UserProfile profile : user.getUserProfiles()){
            if(profile.getType().equals("ADMIN")){
                return "redirect:/adminPage";
            }
        }
-       request.getSession().setAttribute("loggedinuser", username);
+       request.getSession().setAttribute("loggedinuser", user.getName());
        request.getSession().setAttribute("User", user);
        List<Card> cards = businessService.getUsersCards(user);
 
@@ -75,9 +60,8 @@ public class AppController {
 
     @GetMapping(value = {"/adminPage" })
     public String adminPage(HttpServletRequest request, ModelMap model) {
-        String username = getPrincipal();
-        request.getSession().setAttribute("loggedinuser", username);
-        User user = userService.findByUsername(username);
+        User user = userService.getContextUser();
+        request.getSession().setAttribute("loggedinuser", user.getName());
         Bank bank = businessService.getBank(user);
         List<Account> accounts = bank.getAccounts();
         List<Integer> accountsId = new ArrayList<>();
@@ -101,70 +85,11 @@ public class AppController {
         request.getSession().setAttribute("bankName", bank.getName());
         return "adminPage";
     }
-    @GetMapping(value = { "/newuser" })
-    public String newUser(ModelMap model) {
-        User user = new User();
-        model.addAttribute("user", user);
-        return "registration";
-    }
 
-    @PostMapping(value = { "/newuser" })
-    public String saveUser(@Valid User user, BindingResult result) {
-
-        if (result.hasErrors()) {
-            return "registration";
-        }
-
-        if(!userService.isUserNameUnique(user.getUsername())){
-            FieldError duplicateError = new FieldError("user","id", messageSource.getMessage(
-                    "non.unique.username", new String[]{user.getUsername()}, Locale.getDefault()));
-            result.addError(duplicateError);
-            return "registration";
-        }
-        UserProfile userProfile = userProfileService.findByType("USER");
-        Set<UserProfile> roles = new HashSet<>();
-        roles.add(userProfile);
-        user.setUserProfiles(roles);
-        //String password = user.getPassword();
-        userService.saveUser(user);
-        //securityService.autologin(user.getUsername(), password);
-        //return "redirect:/userPage";
-        return "login";
-    }
-
-    @GetMapping(value = "/login")
-    public String login() {
-         if (isCurrentAuthenticationAnonymous()) {
-            return "login";
-        } else {
-             String username = getPrincipal();
-             User user = userService.findByUsername(username);
-             for(UserProfile profile : user.getUserProfiles()){
-                 if(profile.getType().equals("ADMIN")){
-                     return "redirect:/adminPage";
-                 }
-             }
-            return "redirect:/userPage";
-        }
-    }
     @GetMapping(value="/logout")
-    public String logoutPage (){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth != null){
-            SecurityContextHolder.getContext().setAuthentication(null);
-        }
-        return "redirect:/login?logout";
-    }
-
-    public String getPrincipal(){
-        String userName = null;
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            userName = ((UserDetails)principal).getUsername();
-        } else {
-            userName = principal.toString();
-        }
-        return userName;
+    public String logoutPage (HttpServletRequest request) throws ServletException {
+        request.logout();
+        return "redirect:/";
     }
 
     @PostMapping(value="/operation")
@@ -211,31 +136,25 @@ public class AppController {
             }
             else if (commandName.equals("DateStats")){
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-                Date dateFrom = null;
-                Date dateTo = null;
+                Date dateFrom;
+                Date dateTo;
                 try {
                     dateFrom = simpleDateFormat.parse(request.getParameter("dateFrom"));
                     dateTo = simpleDateFormat.parse(request.getParameter("dateTo"));
+                    String bankName = request.getParameter("bankName");
+                    businessService.dateStatsCommand(dateFrom, dateTo, bankName, model);
                 } catch (ParseException e) {
                     e.printStackTrace();
-                    return "adminPage";
                 }
-                String bankName = request.getParameter("bankName");
-                businessService.dateStatsCommand(dateFrom, dateTo, bankName, model);
                 return "adminPage";
             }
         }
-        String username = getPrincipal();
-        User user = userService.findByUsername(username);
+        User user = userService.getContextUser();
         for(UserProfile profile : user.getUserProfiles()){
             if(profile.getType().equals("ADMIN")){
                 return "redirect:/adminPage";
             }
         }
         return "userPage";
-    }
-    private boolean isCurrentAuthenticationAnonymous() {
-        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authenticationTrustResolver.isAnonymous(authentication);
     }
 }

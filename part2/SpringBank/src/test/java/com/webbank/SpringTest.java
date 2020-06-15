@@ -52,8 +52,6 @@ public class SpringTest {
     @Mock
     UserProfileServiceImpl userProfileService;
     @Mock
-    SecurityServiceImpl securityService;
-    @Mock
     AuthenticationTrustResolver authenticationTrustResolver;
     @Mock
     HttpServletRequest request;

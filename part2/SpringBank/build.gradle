@@ -45,7 +45,6 @@ dependencies {
 	compile group: 'org.keycloak', name: 'keycloak-spring-boot-starter', version: '10.0.2'
 	// https://mvnrepository.com/artifact/org.keycloak.bom/keycloak-adapter-bom
 	compile group: 'org.keycloak.bom', name: 'keycloak-adapter-bom', version: '10.0.2', ext: 'pom'
-
 }
 
 test {

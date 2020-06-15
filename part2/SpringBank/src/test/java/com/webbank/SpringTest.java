@@ -50,8 +50,6 @@ public class SpringTest {
     @Mock
     MessageSource messageSource;
     @Mock
-    UserProfileServiceImpl userProfileService;
-    @Mock
     AuthenticationTrustResolver authenticationTrustResolver;
     @Mock
     HttpServletRequest request;
@@ -98,7 +96,6 @@ public class SpringTest {
         userProfileSet.add(userProfile);
         user.setUserProfiles(userProfileSet);
         when(userService.findByUsername("xyz")).thenReturn(user);
-        when(userProfileService.findByType("USER")).thenReturn(userProfile);
         Authentication authentication = mock(Authentication.class);
         SecurityContext securityContext = mock(SecurityContext.class);
         when(authentication.getPrincipal()).thenReturn("xyz");
@@ -108,10 +105,7 @@ public class SpringTest {
     }
     @Test
     public void submitRegistration() throws Exception {
-        //boolean b = userService.isUserNameUnique("xyz");
-        //boolean a = userService.isUserNameUnique("x");
         when(userService.isUserNameUnique("xyz")).thenReturn(true);
-        when(userProfileService.findByType("USER")).thenReturn(new UserProfile());
         MockHttpServletResponse resp = this.mockMvc
                 .perform(
                         post("/newuser")
@@ -123,14 +117,10 @@ public class SpringTest {
                 .andExpect(status().isOk()).andReturn().getResponse();
         Assert.assertEquals(resp.getForwardedUrl(), "login");
         verify(userService, times(1)).saveUser(any());
-        verify(userProfileService, times(1)).findByType("USER");
         verify(userService, times(1)).isUserNameUnique("xyz");
-        //userService.deleteUserById(userService.findByUsername("xyz").getId());
     }
     @Test
     public void submitRegistrationWithWrongName() throws Exception {
-        //boolean b = userService.isUserNameUnique("xyz");
-        //boolean a = userService.isUserNameUnique("x");
         when(userService.isUserNameUnique("xyz")).thenReturn(false);
         MockHttpServletResponse resp = this.mockMvc
                 .perform(
@@ -143,7 +133,6 @@ public class SpringTest {
                 .andExpect(status().isOk()).andReturn().getResponse();
         Assert.assertEquals(resp.getForwardedUrl(), "registration");
         verify(userService, times(1)).isUserNameUnique("xyz");
-        //userService.deleteUserById(userService.findByUsername("xyz").getId());
     }
     @Test
     public void loginUser() throws Exception {
@@ -158,8 +147,7 @@ public class SpringTest {
                 )
                 .andExpect(redirectedUrl("/userPage"))
                 .andExpect(status().is3xxRedirection());
-        verify(userService, times(1)).findByUsername("xyz");
-        verify(userController, times(1)).getPrincipal();
+        verify(userService, times(1)).getContextUser();
     }
     @Test
     public void loginAdmin() throws Exception {
@@ -173,8 +161,7 @@ public class SpringTest {
                 )
                 .andExpect(redirectedUrl("/adminPage"))
                 .andExpect(status().is3xxRedirection());
-        verify(userService, times(1)).findByUsername("xyz");
-        verify(userController, times(1)).getPrincipal();
+        verify(userService, times(1)).getContextUser();
     }
 
     @Test

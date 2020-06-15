@@ -27,6 +27,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.ModelMap;
 
 import javax.servlet.http.HttpServletRequest;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -59,6 +60,10 @@ public class SpringTest {
     HttpServletRequest request;
     @Mock
     ModelMap model;
+    @Mock
+    BankDao bankDao;
+    @Mock
+    BankStatsDao bankStatsDao;
     @Spy
     BusinessServiceImpl businessService;
     @Mock
@@ -77,11 +82,18 @@ public class SpringTest {
                 .build();
 
         when(accountDao.getAccount(anyInt())).thenReturn(new Account());
+        when(bankDao.getBankByAccount(anyInt())).thenReturn(new Bank());
+        BankStats bankStats = new BankStats();
+        bankStats.setTotalTransfer(BigInteger.ONE);
+        bankStats.setTotalProfit(BigInteger.ONE);
+        bankStats.setTotalReplenish(BigInteger.ONE);
+        when(bankStatsDao.getBankStatsByBank(any(Bank.class))).thenReturn(bankStats);
         ReflectionTestUtils.setField(businessService, "accountDao", accountDao);
         ReflectionTestUtils.setField(businessService, "cardDao", mock(CardDao.class));
         ReflectionTestUtils.setField(businessService, "paymentDao", mock(PaymentDao.class));
-        ReflectionTestUtils.setField(businessService, "bankDao", mock(BankDao.class));
+        ReflectionTestUtils.setField(businessService, "bankDao", bankDao);
         ReflectionTestUtils.setField(businessService, "topupDao", mock(TopupDao.class));
+        ReflectionTestUtils.setField(businessService, "bankStatsDao", bankStatsDao);
     }
     public void setSecurityContext(String role){
         UserProfile userProfile = new UserProfile();
@@ -102,8 +114,6 @@ public class SpringTest {
     }
     @Test
     public void submitRegistration() throws Exception {
-        //boolean b = userService.isUserNameUnique("xyz");
-        //boolean a = userService.isUserNameUnique("x");
         when(userService.isUserNameUnique("xyz")).thenReturn(true);
         when(userProfileService.findByType("USER")).thenReturn(new UserProfile());
         MockHttpServletResponse resp = this.mockMvc
@@ -119,12 +129,9 @@ public class SpringTest {
         verify(userService, times(1)).saveUser(any());
         verify(userProfileService, times(1)).findByType("USER");
         verify(userService, times(1)).isUserNameUnique("xyz");
-        //userService.deleteUserById(userService.findByUsername("xyz").getId());
     }
     @Test
     public void submitRegistrationWithWrongName() throws Exception {
-        //boolean b = userService.isUserNameUnique("xyz");
-        //boolean a = userService.isUserNameUnique("x");
         when(userService.isUserNameUnique("xyz")).thenReturn(false);
         MockHttpServletResponse resp = this.mockMvc
                 .perform(
@@ -137,7 +144,6 @@ public class SpringTest {
                 .andExpect(status().isOk()).andReturn().getResponse();
         Assert.assertEquals(resp.getForwardedUrl(), "registration");
         verify(userService, times(1)).isUserNameUnique("xyz");
-        //userService.deleteUserById(userService.findByUsername("xyz").getId());
     }
     @Test
     public void loginUser() throws Exception {
@@ -319,6 +325,5 @@ public class SpringTest {
                 )
                 .andExpect(model().attribute("topup", "+1$ to account."))
                 .andExpect(status().isOk());
-
     }
 }

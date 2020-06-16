@@ -3,14 +3,14 @@ package com.webbank.dao;
 import com.webbank.model.Card;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
-@Transactional
-public interface CardDao extends JpaRepository<Card, Integer> {
+public interface CardDao extends CrudRepository<Card, Integer> {
     @Query("SELECT c FROM  Card c where c.cardNumber=?1")
     Card getCard(int cardNum);
     @Query("SELECT c FROM Card c where c.clientId=?1")

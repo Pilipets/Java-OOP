@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-@Transactional
 public interface PaymentDao extends JpaRepository<Payment, Integer> {
     @Query("select p from Payment p where p.clientId = ?1")
     List<Payment> getPayments(int id);

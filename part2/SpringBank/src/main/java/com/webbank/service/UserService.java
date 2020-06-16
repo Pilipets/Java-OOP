@@ -4,15 +4,12 @@ import com.webbank.dao.UserDao;
 import com.webbank.dao.UserProfileDao;
 import com.webbank.model.User;
 import com.webbank.model.UserProfile;
-import com.webbank.model.UserProfileType;
 import org.keycloak.KeycloakPrincipal;
-import org.keycloak.jose.jwk.JWK;
 import org.keycloak.representations.AccessToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.util.HashSet;
 import java.util.Set;
 
